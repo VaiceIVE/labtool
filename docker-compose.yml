@@ -18,10 +18,8 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://root:password@mongo:27017/
   nest:
     depends_on:
-      - postgres
+      - mongo
     image: node:20
-    environment:
-      DATABASE_HOST: postgres
     restart: "always"
     volumes:
       - ./:/nest-app/
