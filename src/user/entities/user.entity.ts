@@ -68,8 +68,7 @@ export class User {
 
     @OneToMany(() => Task, (task) => task.author)
     @JoinTable()
-    tasksCreated: Task
-
+    tasksCreated: Task[]
 
     @ManyToMany(() => Task)
     @JoinTable()
