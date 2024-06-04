@@ -43,6 +43,13 @@ export class UserController
     }
 
     @UseGuards(AccessTokenGuard)
+    @Get('me')
+    public async getMe(@Req() req)
+    {
+        return await this.userService.getOneByUsername(req.user.sub)
+    }
+
+    @UseGuards(AccessTokenGuard)
     @Post('')
     public async updateOne(@Body() userDto: UserUpdateDto, @Req() req)
     {
