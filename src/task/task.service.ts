@@ -17,18 +17,18 @@ export class TaskService {
   }
 
   async findAll() {
-    return this.taskRepository.find();
+    return await this.taskRepository.find();
   }
 
   async findOne(id: string) {
-    return this.taskRepository.findOneBy({_id: new ObjectId(id)});
+    return await this.taskRepository.findOneBy({_id: new ObjectId(id)});
   }
 
-  async update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
+  async update(id: string, updateTaskDto: UpdateTaskDto) {
+    return await this.taskRepository.update({_id: new ObjectId(id)}, updateTaskDto);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return `This action removes a #${id} task`;
   }
 }
