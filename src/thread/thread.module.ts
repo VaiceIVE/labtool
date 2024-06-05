@@ -2,12 +2,18 @@ import { Module } from '@nestjs/common';
 import { ThreadService } from './thread.service';
 import { ThreadController } from './thread.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Thread } from './entities/thread.entity';
-import { Message } from './entities/message.entity';
-import { MessageFile } from './entities/messageFile.entity';
+import { Thread, ThreadSchema } from './entities/thread.schema';
+import { Message, MessageSchema } from './entities/message.schema';
+import { MessageFile, MessageFileSchema } from './entities/messageFile.schema';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Thread, Message, MessageFile])],
+  imports:[
+    MongooseModule.forFeature([
+      { name: Thread.name, schema: ThreadSchema },
+      { name: Message.name, schema: MessageSchema},
+      { name: MessageFile.name, schema: MessageFileSchema},
+    ])],
   controllers: [ThreadController],
   providers: [ThreadService],
 })

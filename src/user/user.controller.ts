@@ -11,7 +11,7 @@ export class UserController
         private readonly userService: UserService
     ){}
     
-
+    /*
     @Delete('dropall')
     public async dropAll()
     {
@@ -23,7 +23,7 @@ export class UserController
     {
         return await this.userService.deleteOne(id)
     }    
-
+*/
     @UseGuards(AccessTokenGuard)
     @Get('me')
     public async getMe(@Req() req)

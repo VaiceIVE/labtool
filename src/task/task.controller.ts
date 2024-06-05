@@ -21,7 +21,7 @@ export class TaskController {
   @UseGuards(AccessTokenGuard)
   @Get('tutor')
   public async findByTutor(@Req() req) {
-    return await this.taskService.findByTutor(req.user.username);
+    return await this.taskService.findByTutor(req.user.sub);
   }
 
   @Get(':id')

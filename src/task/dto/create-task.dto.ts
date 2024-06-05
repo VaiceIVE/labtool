@@ -1,6 +1,6 @@
 export class CreateTaskDto {
     title: string
     description: string
-    authorId: string
+    author: string
     asignedGroups: string[]
 }

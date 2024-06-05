@@ -1,14 +1,19 @@
 import { Module } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { TaskController } from './task.controller';
-import { Task } from './entities/task.entity';
+import { Task, TaskSchema } from './entities/task.schema';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TaskFile } from './entities/taskFile.entity';
-import { User } from 'src/database/entities-index';
+import { TaskFile, TaskFileSchema } from './entities/taskFile.schema';
 import { UserModule } from 'src/user/user.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Task, TaskFile]), UserModule],
+  imports:[
+    MongooseModule.forFeature([
+      { name: Task.name, schema: TaskSchema},
+      { name: TaskFile.name, schema: TaskFileSchema}
+    ]), 
+      UserModule],
   controllers: [TaskController],
   providers: [TaskService],
   exports: [TaskService]

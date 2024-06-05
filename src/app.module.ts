@@ -6,14 +6,14 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { TaskModule } from './task/task.module';
 import { ThreadModule } from './thread/thread.module';
 import ormconfig from './ormconfig';
-
+import { MongooseModule } from '@nestjs/mongoose';
 @Module({
   imports: [
     ConfigModule.forRoot(),
     UserModule,
     AuthModule,
 
-    TypeOrmModule.forRoot(ormconfig as TypeOrmModuleOptions),
+    MongooseModule.forRoot(process.env.MONGO_CONNECTION_STRING),
 
     TaskModule,
 

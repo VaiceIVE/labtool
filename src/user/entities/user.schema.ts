@@ -1,17 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn, JoinTable, ManyToMany, BeforeInsert, BeforeUpdate, Repository, ObjectIdColumn } from "typeorm"
 import { UserService } from "../user.service"
 import { InjectRepository } from "@nestjs/typeorm"
 import { ObjectId } from 'mongodb'
-import { Task } from "src/task/entities/task.entity"
-import { Thread } from "src/thread/entities/thread.entity"
-import { Message } from "src/thread/entities/message.entity"
-@Entity()
+import { Task } from "src/task/entities/task.schema"
+import { Thread } from "src/thread/entities/thread.schema"
+import { Message } from "src/thread/entities/message.schema"
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
+import mongoose from "mongoose"
+@Schema()
 export class User {
 
-    @ObjectIdColumn()
-    _id: ObjectId
-
-    @Column(
+    @Prop(
         {
             nullable: false,
             unique: true
@@ -19,22 +17,21 @@ export class User {
     )
     username: string
 
-    @Column(
+    @Prop(
         {
             nullable: false,
         }
     )
     nickname: string
 
-    @Column(
+    @Prop(
         {
             nullable: true,
-            select: false
         }
     )
     password: string
 
-    @Column(
+    @Prop(
         {
             nullable: true,
         }
@@ -42,14 +39,14 @@ export class User {
     role: "admin" | "user" | "inspector"
 
 
-    @Column(
+    @Prop(
         {
             nullable: true,
         }
     )
     refreshToken: string
     
-    @Column
+    @Prop
     (
         {
             nullable: true
@@ -59,7 +56,7 @@ export class User {
     
     points: number
 
-    @Column
+    @Prop
     (
         {
             nullable: true,
@@ -67,20 +64,18 @@ export class User {
     )
     avataruri: string
 
-    @OneToMany(() => Task, (task) => task.author)
-    @JoinTable()
+    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task' }]})
     tasksCreated: Task[]
 
-    @ManyToMany(() => Task)
-    @JoinTable()
+    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task' }]})
     tasksAssigned: Task[]
 
-    @OneToMany(() => Thread, thread => thread.student)
-    @JoinTable()
+    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Thread' }]})
     threads: Thread[]
 
-    @OneToMany(() => Message, message => message.author)
-    @JoinTable()
+    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message' }]})
     messages: Message[]
 
 }
+
+export const UserSchema = SchemaFactory.createForClass(User);

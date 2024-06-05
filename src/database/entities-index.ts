@@ -1,6 +1,0 @@
-export * from '../task/entities/task.entity'
-export * from '../task/entities/taskFile.entity'
-export * from '../thread/entities/message.entity'
-export * from '../thread/entities/messageFile.entity'
-export * from '../thread/entities/thread.entity'
-export * from '../user/entities/user.entity'

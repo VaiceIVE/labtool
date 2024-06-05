@@ -27,6 +27,6 @@ services:
     ports:
       - 8000:8000
     working_dir: /nest-app/
-    entrypoint: bash -c "ls && npm run create-entities-index && npm run start:dev"
+    entrypoint: npm run start:dev
     links:
       - "mongo:mongo"
