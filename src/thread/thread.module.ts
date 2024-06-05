@@ -6,9 +6,12 @@ import { Thread, ThreadSchema } from './entities/thread.schema';
 import { Message, MessageSchema } from './entities/message.schema';
 import { MessageFile, MessageFileSchema } from './entities/messageFile.schema';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UserService } from 'src/user/user.service';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports:[
+    UserModule,
     MongooseModule.forFeature([
       { name: Thread.name, schema: ThreadSchema },
       { name: Message.name, schema: MessageSchema},

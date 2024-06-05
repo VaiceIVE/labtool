@@ -6,6 +6,8 @@ import { Thread } from './entities/thread.schema';
 import { Model } from 'mongoose';
 import { Message } from './entities/message.schema';
 import { CreateMessageDto } from './dto/create-message.dto';
+import { ObjectId } from 'mongodb';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class ThreadService {
@@ -14,9 +16,11 @@ export class ThreadService {
       private threadModel: Model<Thread>,
       @InjectModel(Message.name) 
       private messageModel: Model<Message>,
+      private userService: UserService
   ){}
   async create(createThreadDto: CreateThreadDto) {
     const createdThread = await this.threadModel.create(createThreadDto)
+    this.userService.addThread(createThreadDto.student, createdThread)
     return await createdThread.save()
   }
 
@@ -32,18 +36,32 @@ export class ThreadService {
     return this.threadModel.updateOne({id}, updateThreadDto)
   }
 
+  async getTutored(id: string)
+  {
+    return this.threadModel.find({task:{author: id}})
+  }
+
   async remove(id: string) {
-    return this.threadModel.deleteOne({id})
+    return this.threadModel.deleteOne({where: {id: id}})
   }
 
   async accept(id: string)
   {
-    return this.threadModel.updateOne({id}, {isDone: true})
+    return this.threadModel.findByIdAndUpdate(id, {isDone: true})
   }
 
   async createMessage(thread: string, user: string, createMessageDto: CreateMessageDto)
   {
     const createdMessage = await this.messageModel.create({...createMessageDto, user:user, thread: thread})
     return await createdMessage.save()
+  }
+  async getMessages(id: string)
+  {
+    return this.messageModel.find({thread: id}).sort([['date', -1]])
+  }
+
+  async getForStudent(id: string)
+  {
+    return await this.threadModel.find({student: id})
   }
 }

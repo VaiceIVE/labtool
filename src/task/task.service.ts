@@ -46,4 +46,9 @@ export class TaskService {
   async remove(id: string) {
     return await this.taskModel.deleteOne(new ObjectId(id));
   }
+
+  async findByGroup (id: string)
+  {
+    return await this.taskModel.find({asignees: id})
+  }
 }

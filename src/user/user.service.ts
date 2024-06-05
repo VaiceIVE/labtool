@@ -11,6 +11,7 @@ import { Model } from 'mongoose';
 import { Task } from 'src/task/entities/task.schema';
 import { Group } from './entities/group.schema';
 import { CreateGroupDto } from './dtos/createGroup.dto';
+import { Thread } from 'src/thread/entities/thread.schema';
 
 @Injectable()
 export class UserService {
@@ -20,6 +21,13 @@ export class UserService {
         @InjectModel(Group.name) 
         private groupModel: Model<Group>
     ){}
+
+    public async addThread(userid: string, threadid: Thread)
+    {
+        let user = await this.userModel.findById(userid)
+        user.threads.push(threadid)
+        return user.save()
+    }
 
     public async create(user: CreateUserDto)
     {

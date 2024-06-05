@@ -5,7 +5,7 @@ import { UpdateThreadDto } from './dto/update-thread.dto';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { AccessTokenGuard } from 'src/auth/accessToken.guard';
 import { UserRolesGuard } from 'src/user/user.guard';
-import { Role, Roles } from 'src/user/roles.decorator';
+import { Roles } from 'src/user/roles.decorator';
 
 @Controller('thread')
 export class ThreadController {
@@ -21,8 +21,18 @@ export class ThreadController {
     return this.threadService.createMessage(thread, req.user.sub, createMessageDto)
   }
 
-  @Roles(Role.Lecturer)
-  @UseGuards(UserRolesGuard)
+  @Get(':id/message')
+  async getMessages(@Param('id') id: string)
+  {
+    return this.threadService.getMessages(id)
+  }
+
+  @Get('student/:id')
+  async getForStudent(@Param('id') id: string)
+  {
+    return this.threadService.getForStudent(id)
+  }
+
   @Post(':id/accept')
   async acceptTask(@Param('id') id: string)
   {
@@ -32,6 +42,13 @@ export class ThreadController {
   @Post()
   async create(@Body() createThreadDto: CreateThreadDto) {
     return this.threadService.create(createThreadDto);
+  }
+
+  @UseGuards(AccessTokenGuard)
+  @Get('tutor')
+  async getTutored(@Req() req)
+  {
+    return this.threadService.getTutored(req.user.sub)
   }
 
   @Get()

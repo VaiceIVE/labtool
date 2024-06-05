@@ -32,6 +32,18 @@ export class TaskController {
     }
   }
 
+  @Get('group/:id')
+  public async findByGroupId(@Param('id') id: string) {
+    try{
+      return await this.taskService.findByGroup(id);
+    }
+    catch(e)
+    {
+      console.log(e)
+      return e
+    }
+  }
+
   @UseGuards(AccessTokenGuard)
   @Get('tutor')
   public async findByTutor(@Req() req) {
