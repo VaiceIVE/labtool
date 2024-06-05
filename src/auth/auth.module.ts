@@ -9,7 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    JwtModule.register({signOptions: { expiresIn: '3600h' },}),
+    JwtModule.register({signOptions: { expiresIn: '3600d' },}),
     ConfigModule.forRoot(),
     UserModule,
   ],

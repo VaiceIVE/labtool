@@ -16,10 +16,21 @@ export class Thread {
     })
     isDone: boolean
 
-    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+    @Prop({
+        nullable: false
+    })
+
+    name: string
+
+    @Prop({
+        nullable: false
+    })
+    description: string 
+    
+    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'User'})
     student: User
 
-    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message' }]})
+    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}]})
     messages: Message[]
 }
 

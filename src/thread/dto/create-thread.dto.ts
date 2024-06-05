@@ -1,1 +1,5 @@
-export class CreateThreadDto {}
+export class CreateThreadDto {
+    task: string
+    student: string
+    
+}

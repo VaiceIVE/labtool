@@ -15,7 +15,7 @@ export class UserResponseDto
     username: string
     nickname: string
     rank: string
-    role?: "admin" | "user" | "inspector"
+    role?: "admin" | "student" | "lecturer"
     type?: string
 
 }

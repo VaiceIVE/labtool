@@ -3,7 +3,7 @@ export class UserUpdateDto
     username?: string
     nickname?: string
     password?: string
-    role?: "admin" | "user" | "lecturer"
+    role?: "admin" | "student" | "lecturer"
     refreshToken?: string
     avataruri?: string
 }
