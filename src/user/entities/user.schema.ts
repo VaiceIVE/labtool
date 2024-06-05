@@ -6,6 +6,7 @@ import { Thread } from "src/thread/entities/thread.schema"
 import { Message } from "src/thread/entities/message.schema"
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
 import mongoose from "mongoose"
+import { Group } from "./group.schema"
 @Schema()
 export class User {
 
@@ -50,18 +51,13 @@ export class User {
     @Prop
     (
         {
-            nullable: true
-        }
-    )
-    grade: "8" | "9" | "10" | "11" 
-    
-    @Prop
-    (
-        {
             nullable: true,
         }
     )
     avataruri: string
+
+    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Group' })
+    group: Group
 
     @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task' }]})
     tasksCreated: Task[]
