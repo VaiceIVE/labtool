@@ -24,9 +24,12 @@ export class UserService {
     public async create(user: CreateUserDto)
     {
         const createdUser = new this.userModel(user)
-        let group = await this.groupModel.findById(user.group)
-        group.students.push(createdUser.id)
-        await group.save()
+        if (user.group)
+            {
+                let group = await this.groupModel.findById(user.group)
+                group.students.push(createdUser.id)
+                await group.save()
+            }
         return await createdUser.save()
     }
 

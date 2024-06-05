@@ -36,7 +36,10 @@ export class ThreadService {
     return this.threadModel.deleteOne({id})
   }
 
-
+  async accept(id: string)
+  {
+    return this.threadModel.updateOne({id}, {isDone: true})
+  }
 
   async createMessage(thread: string, user: string, createMessageDto: CreateMessageDto)
   {

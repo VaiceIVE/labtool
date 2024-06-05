@@ -4,20 +4,30 @@ import { CreateThreadDto } from './dto/create-thread.dto';
 import { UpdateThreadDto } from './dto/update-thread.dto';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { AccessTokenGuard } from 'src/auth/accessToken.guard';
+import { UserRolesGuard } from 'src/user/user.guard';
+import { Role, Roles } from 'src/user/roles.decorator';
 
 @Controller('thread')
 export class ThreadController {
   constructor(private readonly threadService: ThreadService) {}
 
 
-    //MESSAGE SECTION 
+  //MESSAGE SECTION 
 
-    @UseGuards(AccessTokenGuard)
-    @Post(':id/message')
-    async addMessage(@Body() createMessageDto: CreateMessageDto, @Req() req, @Param('id') thread: string)
-    {
-      return this.threadService.createMessage(thread, req.user.sub, createMessageDto)
-    }
+  @UseGuards(AccessTokenGuard)
+  @Post(':id/message')
+  async addMessage(@Body() createMessageDto: CreateMessageDto, @Req() req, @Param('id') thread: string)
+  {
+    return this.threadService.createMessage(thread, req.user.sub, createMessageDto)
+  }
+
+  @Roles(Role.Lecturer)
+  @UseGuards(UserRolesGuard)
+  @Post(':id/accept')
+  async acceptTask(@Param('id') id: string)
+  {
+    return this.threadService.accept(id)
+  }
 
   @Post()
   async create(@Body() createThreadDto: CreateThreadDto) {
