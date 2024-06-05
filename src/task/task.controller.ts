@@ -10,32 +10,74 @@ export class TaskController {
 
   @Post()
   async create(@Body() createTaskDto: CreateTaskDto) {
-    return await this.taskService.create(createTaskDto);
+    try{
+      return await this.taskService.create(createTaskDto);
+    }
+    catch(e)
+    {
+      console.log(e)
+      return e
+    }
   }
 
   @Get()
   public async findAll() {
-    return await this.taskService.findAll();
+    try{
+      return await this.taskService.findAll();
+    }
+    catch(e)
+    {
+      console.log(e)
+      return e
+    }
   }
 
   @UseGuards(AccessTokenGuard)
   @Get('tutor')
   public async findByTutor(@Req() req) {
-    return await this.taskService.findByTutor(req.user.sub);
+    try{
+      return await this.taskService.findByTutor(req.user.sub);
+    }
+    catch(e)
+    {
+      console.log(e)
+      return e
+    }
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return await this.taskService.findOne(id);
+    try{
+      return await this.taskService.findOne(id);
+    }
+    catch(e)
+    {
+      console.log(e)
+      return e
+    }
   }
 
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-    return await this.taskService.update(id, updateTaskDto);
+    try{
+      return await this.taskService.update(id, updateTaskDto);
+    }
+    catch(e)
+    {
+      console.log(e)
+      return e
+    }
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return await this.taskService.remove(id);
+    try{
+      return await this.taskService.remove(id);
+    }
+    catch(e)
+    {
+      console.log(e)
+      return e
+    }
   }
 }

@@ -28,38 +28,68 @@ export class UserController
     @Get('me')
     public async getMe(@Req() req)
     {
-        return await this.userService.getOneByUsername(req.user.username)
+        try {
+            return await this.userService.getOneByUsername(req.user.username)
+        } catch (error) {
+            console.log(error)
+            return error
+        }
     }
 
     @Get()
     public async getAll()
     {
-        return await this.userService.getAll()
+        try {
+            return await this.userService.getAll()
+        } catch (error) {
+            console.log(error)
+            return error
+        }
     }
 
     @Get(':userid')
     public async getOneById(@Param('userid') userid: string)
     {
-        return await this.userService.getOneByNickname((await this.userService.getOneById(userid)).nickname)
+        try {
+            return await this.userService.getOneByNickname((await this.userService.getOneById(userid)).nickname)
+        } catch (error) {
+            console.log(error)
+            return error
+        }
     }
 
     @Post(':id')
     public async updateOneAdmined(@Body() userDto: UserUpdateDto, @Param('id')id: string)
     {
-        return await this.userService.updateOne(id, userDto)
+        try {
+            return await this.userService.updateOne(id, userDto)
+        } catch (error) {
+            console.log(error)
+            return error
+        }
     }
 
     @UseGuards(AccessTokenGuard)
     @Post('')
     public async updateOne(@Body() userDto: UserUpdateDto, @Req() req)
     {
-        return await this.userService.updateOne(req.user.sub, userDto)
+        try {
+            return await this.userService.updateOne(req.user.sub, userDto)
+        } catch (error) {
+            console.log(error)
+            return error
+        }
     }    
 
     @UseGuards(AccessTokenGuard)
     @Delete('')
     public async deleteOne(@Req() req)
     {
-        return await this.userService.deleteOne(req.user.sub)
+        try {
+            return await this.userService.deleteOne(req.user.sub)
+        } catch (error) {
+            console.log(error)
+            return error
+        }
     }
 }

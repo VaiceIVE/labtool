@@ -9,18 +9,35 @@ import { ObjectId } from 'mongodb';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Task } from 'src/task/entities/task.schema';
+import { Group } from './entities/group.schema';
+import { CreateGroupDto } from './dtos/createGroup.dto';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectModel(User.name) 
-        private userModel: Model<User>
+        private userModel: Model<User>,
+        @InjectModel(Group.name) 
+        private groupModel: Model<Group>
     ){}
 
     public async create(user: CreateUserDto)
     {
         const createdUser = new this.userModel(user)
+        let group = await this.groupModel.findById(user.group)
+        group.students.push(createdUser.id)
+        await group.save()
         return await createdUser.save()
+    }
+
+    public async createGroup(group: CreateGroupDto)
+    {
+        return await this.groupModel.create(group)
+    }
+
+    public async getGroup()
+    {
+        return await this.groupModel.find()
     }
 
     public async addTaskCreated(userid: string, task: Task)
@@ -30,11 +47,11 @@ export class UserService {
         return user.save()
     }
 
-    public async addTaskAssigned(userid: string, task: Task)
+    public async addTaskAssigned(groupid: string, task: Task)
     {
-        let user = await this.userModel.findById(userid)
-        user.tasksAssigned.push(task)
-        return user.save()
+        let group = await this.groupModel.findById(groupid)
+        group.tasksAssigned.push(task)
+        return group.save()
     }
 
     public async getOneById(id: string)
@@ -71,6 +88,7 @@ export class UserService {
     {
         return await this.userModel.updateOne({id: userid}, userDto)
     }
+
     public async deleteOne(id: string)
     {
         return await this.userModel.deleteOne()

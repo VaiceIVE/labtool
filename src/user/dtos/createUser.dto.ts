@@ -3,6 +3,7 @@ export class CreateUserDto
     nickname: string
     username: string
     password: string
+    group: string
     avatar?: string
-    role: "user" | "admin" | "inspector"
+    role: "student" | "admin" | "lecturer"
 }

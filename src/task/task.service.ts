@@ -18,8 +18,12 @@ export class TaskService {
       private userService: UserService
   ){}
   async create(createTaskDto: CreateTaskDto) {
-    const createdTask = new this.taskModel(createTaskDto)
-    this.userService.addTaskCreated(createTaskDto.author, createdTask.id)
+    const createdTask = new this.taskModel({...createTaskDto, asignees: createTaskDto.asignedGroups})
+    await this.userService.addTaskCreated(createTaskDto.author, createdTask.id)
+    for (const group of createTaskDto.asignedGroups)
+    {
+      await this.userService.addTaskAssigned(group, createdTask.id)
+    }
     return await createdTask.save()
   }
 

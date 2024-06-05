@@ -33,10 +33,11 @@ export class User {
 
     @Prop(
         {
-            nullable: true,
+            nullable: false,
+            default: "student"
         }
     )
-    role: "admin" | "user" | "inspector"
+    role: "admin" | "student" | "lecturer"
 
 
     @Prop(
@@ -54,8 +55,6 @@ export class User {
     )
     grade: "8" | "9" | "10" | "11" 
     
-    points: number
-
     @Prop
     (
         {
@@ -66,9 +65,6 @@ export class User {
 
     @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task' }]})
     tasksCreated: Task[]
-
-    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task' }]})
-    tasksAssigned: Task[]
 
     @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Thread' }]})
     threads: Thread[]
