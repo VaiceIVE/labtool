@@ -14,6 +14,7 @@ export class User {
     @Column(
         {
             nullable: false,
+            unique: true
         }
     )
     username: string
@@ -81,4 +82,5 @@ export class User {
     @OneToMany(() => Message, message => message.author)
     @JoinTable()
     messages: Message[]
+
 }

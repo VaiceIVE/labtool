@@ -4,5 +4,7 @@ export default
     type: 'mongodb',
     entities: Object.values(entities),
     url: process.env.MONGO_CONNECTION_STRING,
-    synchronize: true,
+    synchronize: false,
+    //synchronize: true,
+
 }

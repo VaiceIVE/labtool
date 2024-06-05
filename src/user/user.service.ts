@@ -19,7 +19,7 @@ export class UserService {
         return await this.userRepository.save(user)
     }
 
-    public async create(user: CreateUserDto | VkUserDto)
+    public async create(user: CreateUserDto)
     {
         const newUser = this.userRepository.create(user)
         await this.userRepository.save(newUser)

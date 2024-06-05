@@ -14,6 +14,12 @@ export class Message {
     })
     text: string
 
+    @Column({
+        nullable: false,
+        default: Date.now
+    })
+    dateCreated: Date
+
     @ManyToOne(() => User, user => user.messages)
     @JoinTable()
     author: User

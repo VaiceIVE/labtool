@@ -5,19 +5,31 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './entities/task.entity';
 import { Repository } from 'typeorm';
 import { ObjectId } from 'mongodb';
+import { TaskFile } from './entities/taskFile.entity';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class TaskService {
   constructor(
       @InjectRepository(Task)
         private taskRepository: Repository<Task>,
+      private userService: UserService
   ){}
   async create(createTaskDto: CreateTaskDto) {
-    return await this.taskRepository.create(createTaskDto)
+    const author = await this.userService.getOneById(createTaskDto.authorId)
+    console.log(author)
+    const newTask = this.taskRepository.create({...createTaskDto, author: author})
+    await this.taskRepository.save(newTask)
+    return newTask
   }
 
   async findAll() {
     return await this.taskRepository.find();
+  }
+
+  async findByTutor(username: string) {
+    console.log(username)
+    return await this.taskRepository.find({where: {author: {username: username}}});
   }
 
   async findOne(id: string) {
@@ -29,6 +41,6 @@ export class TaskService {
   }
 
   async remove(id: string) {
-    return `This action removes a #${id} task`;
+    return await this.taskRepository.delete(new ObjectId(id));
   }
 }

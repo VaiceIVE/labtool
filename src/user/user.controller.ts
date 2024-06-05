@@ -24,6 +24,13 @@ export class UserController
         return await this.userService.deleteOne(id)
     }    
 
+    @UseGuards(AccessTokenGuard)
+    @Get('me')
+    public async getMe(@Req() req)
+    {
+        return await this.userService.getOneByUsername(req.user.username)
+    }
+
     @Get()
     public async getAll()
     {
@@ -40,13 +47,6 @@ export class UserController
     public async updateOneAdmined(@Body() userDto: UserUpdateDto, @Param('id')id: string)
     {
         return await this.userService.updateOne(id, userDto)
-    }
-
-    @UseGuards(AccessTokenGuard)
-    @Get('me')
-    public async getMe(@Req() req)
-    {
-        return await this.userService.getOneByUsername(req.user.sub)
     }
 
     @UseGuards(AccessTokenGuard)
