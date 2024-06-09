@@ -37,4 +37,10 @@ export class GroupController
         return await this.userService.getGroup()
     }
 
+    @Get(':id')
+    public async getGroupById(@Param('id')id: string)
+    {
+        return await this.userService.getGroupById(id)
+    }
+
 }

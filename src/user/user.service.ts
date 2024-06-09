@@ -51,6 +51,11 @@ export class UserService {
         return await this.groupModel.find()
     }
 
+    public async getGroupById(id: string)
+    {
+        return await this.groupModel.findById(id)
+    }
+
     public async addTaskCreated(userid: string, task: Task)
     {
         let user = await this.userModel.findById(userid)
