@@ -64,4 +64,14 @@ export class ThreadService {
   {
     return await this.threadModel.find({student: id})
   }
+
+  async getForTask(id: string)
+  {
+    return await this.threadModel.find({task: id})
+  }
+
+  async getForTaskAndStudent(taskid: string, studentid: string)
+  {
+    return await this.threadModel.find({task: taskid, student: studentid})
+  }
 }

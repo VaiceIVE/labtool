@@ -33,6 +33,18 @@ export class ThreadController {
     return this.threadService.getForStudent(id)
   }
 
+  @Get('task/:id')
+  async getForTask(@Param('id') id: string)
+  {
+    return this.threadService.getForTask(id)
+  }
+
+  @Get('task/:taskid/student/:studentid')
+  async getForTaskAndStudent(@Param('taskid') taskidid: string, @Param('studentid') studentid: string)
+  {
+    return this.threadService.getForTaskAndStudent(taskidid, studentid)
+  }
+
   @Post(':id/accept')
   async acceptTask(@Param('id') id: string)
   {
