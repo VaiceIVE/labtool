@@ -53,6 +53,7 @@ export class ThreadService {
   async createMessage(thread: string, user: string, createMessageDto: CreateMessageDto)
   {
     const createdMessage = await this.messageModel.create({...createMessageDto, user:user, thread: thread})
+    console.log(createdMessage)
     return await createdMessage.save()
   }
   async getMessages(id: string)
