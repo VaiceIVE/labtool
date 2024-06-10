@@ -71,7 +71,7 @@ export class ThreadService {
     let res = []
     for (const thread of threads)
       {
-        res.push({...thread, user: await this.userService.getOneByUser(thread.student)
+        res.push({...thread, user: await this.userService.getOneByUser(thread.student)})
       }
     return res
   }
