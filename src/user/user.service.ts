@@ -75,6 +75,11 @@ export class UserService {
         return await this.userModel.findById(id)
     }
 
+    public async getOneByUser(id: User)
+    {
+        return await this.userModel.findById(id)
+    }
+
     public async getOneByUsername(username: string)
     {
         return await this.userModel.findOne({username: username}) 
