@@ -18,6 +18,7 @@ export class ThreadController {
   @Post(':id/message')
   async addMessage(@Body() createMessageDto: CreateMessageDto, @Req() req, @Param('id') thread: string)
   {
+    console.log(req.user)
     return this.threadService.createMessage(thread, req.user.sub, createMessageDto)
   }
 
