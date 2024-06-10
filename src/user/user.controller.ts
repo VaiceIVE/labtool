@@ -50,8 +50,9 @@ export class UserController
     @Get(':userid')
     public async getOneById(@Param('userid') userid: string)
     {
+        console.log(userid)
         try {
-            return await this.userService.getOneByNickname((await this.userService.getOneById(userid)).nickname)
+            return await this.userService.getOneById(userid)
         } catch (error) {
             console.log(error)
             return error
