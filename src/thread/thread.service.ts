@@ -67,7 +67,13 @@ export class ThreadService {
 
   async getForTask(id: string)
   {
-    return await this.threadModel.find({task: id})
+    const threads = await this.threadModel.find({task: id})
+    let res = []
+    for (const thread of threads)
+      {
+        res.push({...thread, user: thread.student})
+      }
+    return res
   }
 
   async getForTaskAndStudent(taskid: string, studentid: string)
